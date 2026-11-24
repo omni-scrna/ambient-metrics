@@ -1,9 +1,9 @@
 {
   "stage": "AMBIENT_M",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "benchmark": "omni-scrna/ambient-plan",
   "args": [
-    { "flag": "--rawdata_h5ad", "type": "path", "help": "Raw h5ad count matrix (unfiltered, one pool)" },
+    { "flag": "--prepared_h5ad", "type": "path", "help": "PREP output: the count matrix the method ran on (unfiltered, one pool; raw or merged)" },
     { "flag": "--filtered_h5ad", "type": "path", "help": "Output of an ambient RNA removal method (one pool)" },
     { "flag": "--demultiplexed_tsv", "type": "path", "help": "DEMUX output (cell_id, species, multiplet, ...)" }
   ]

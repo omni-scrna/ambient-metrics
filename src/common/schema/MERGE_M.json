@@ -1,0 +1,8 @@
+{
+  "stage": "MERGE_M",
+  "version": "0.1.0",
+  "benchmark": "omni-scrna/ambient-plan",
+  "args": [
+    { "flag": "--from-files", "dest": "from_files", "type": "path", "help": "Gather manifest (lineage.json): the filtered_h5ad of one method on every PREP variant and pool" }
+  ]
+}

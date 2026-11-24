@@ -148,7 +148,7 @@ def test_barnyard_needs_both_species(barnyard):
 # ---------------------------------------------------------------- CLI
 
 def test_cli_output_arg(tmp_path):
-    base = ["--output_dir", str(tmp_path), "--name", "m", "--rawdata_h5ad", "r.h5ad",
+    base = ["--output_dir", str(tmp_path), "--name", "m", "--prepared_h5ad", "r.h5ad",
             "--filtered_h5ad", "f.h5ad", "--demultiplexed_tsv", "d.tsv"]
     args = parse_args(base + ["--output", "ambient_metrics_json=/x/y.json"])
     assert str(output_path(args)) == "/x/y.json"

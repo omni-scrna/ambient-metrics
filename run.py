@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """Ambient RNA removal metrics (stage AMBIENT_M of ambient-plan).
 
-Compares one ambient-removal output (`filtered_h5ad`) of one pool with the raw
-counts of the same cells (`rawdata_h5ad`), and writes one flat JSON of scalars.
+Compares one ambient-removal output (`filtered_h5ad`) of one pool with the
+counts the method was given for the same cells (`prepared_h5ad`, the PREP
+output: raw, or merged over orthologs / GEMs), and writes one flat JSON of
+scalars. "Raw" below means that matrix.
 
 1. Count inflation (every dataset). Ambient removal should only subtract
    counts. Does a method *add* counts compared with the raw counts?
@@ -14,7 +16,8 @@ counts of the same cells (`rawdata_h5ad`), and writes one flat JSON of scalars.
    - fraction of cross-species counts removed (ideal: close to 1);
    - fraction of own-species counts removed (should stay small: own-species
      ambient RNA exists too, so it is not 0 for a perfect method).
-   Datasets without both species give None for these keys.
+   Datasets without both species give None for these keys, and so does an
+   ortholog-merged matrix: its features belong to neither species.
 
 Everything is aligned by barcode and gene NAME, never by position: methods
 may reorder cells and genes. A name-independent check (correlation of matched
@@ -66,7 +69,7 @@ def parse_args(argv=None):
     rest, outputs = strip_output_args(argv)
     p = argparse.ArgumentParser(description="Ambient RNA removal metrics", allow_abbrev=False)
     cli.add_base_args(p)                  # --output_dir, --name
-    cli.add_stage_args(p, "AMBIENT_M")    # --rawdata_h5ad, --filtered_h5ad, --demultiplexed_tsv
+    cli.add_stage_args(p, "AMBIENT_M")    # --prepared_h5ad, --filtered_h5ad, --demultiplexed_tsv
     p.add_argument("--seed", type=int, default=0, help="Seed for the alignment-check cell sample")
     args = p.parse_args(rest)
     args.outputs = outputs
@@ -269,7 +272,7 @@ def main():
         print(f"  {k}: {v}")
 
     # backed="r": a raw pool has ~1.5 M barcodes; load only the output's cells.
-    raw = ad.read_h5ad(args.rawdata_h5ad, backed="r")
+    raw = ad.read_h5ad(args.prepared_h5ad, backed="r")
     out = ad.read_h5ad(args.filtered_h5ad)
     keep = out.obs_names[out.obs_names.isin(raw.obs_names)]
     raw = raw[keep].to_memory()

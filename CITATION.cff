@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: "If you use this module, please cite it."
+title: "ambient-metrics: metrics for the omni-scrna ambient RNA removal benchmark"
+authors:
+  - family-names: Busch
+    given-names: Pauline
+version: 0.1.0
+repository-code: "https://github.com/omni-scrna/ambient-metrics"
+license: MIT
